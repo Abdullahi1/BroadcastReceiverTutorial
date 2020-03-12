@@ -18,6 +18,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Button button  = findViewById(R.id.bt_broad_cast);
+        Button button1 = findViewById(R.id.bt_broad_cast_inner);
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -28,6 +29,13 @@ public class MainActivity extends AppCompatActivity {
 
                 Intent intent = new Intent("android.mycustom.action");
                 sendBroadcast(intent);
+
+            }
+        });
+
+        button1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
             }
         });

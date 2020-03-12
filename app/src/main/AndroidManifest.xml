@@ -16,13 +16,25 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <receiver android:name=".MyFirstReceiver"/>
-        <receiver android:name=".MainActivity$MyThirdReceiverInner"/>
+
+        <receiver android:name=".MyFirstReceiver">
+            <intent-filter>
+                <action android:name="android.mycustom.action"/>
+            </intent-filter>
+        </receiver>
+
+        <receiver android:name=".MainActivity$MyThirdReceiverInner">
+            <intent-filter>
+                <action android:name="android.mycustom.action"/>
+            </intent-filter>
+        </receiver>
+
         <receiver android:name=".MainActivity$MyFourthReceiverInner">
             <intent-filter>
                 <action android:name="android.mycustom.action"/>
             </intent-filter>
         </receiver>
+
     </application>
 
 </manifest>
