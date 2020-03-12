@@ -18,6 +18,11 @@
         </activity>
         <receiver android:name=".MyFirstReceiver"/>
         <receiver android:name=".MainActivity$MyThirdReceiverInner"/>
+        <receiver android:name=".MainActivity$MyFourthReceiverInner">
+            <intent-filter>
+                <action android:name="android.mycustom.action"/>
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>
