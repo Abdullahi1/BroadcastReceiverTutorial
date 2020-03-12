@@ -27,18 +27,42 @@ public class MainActivity extends AppCompatActivity {
 //                sendBroadcast(intent);
 
 
-                Intent intent = new Intent("android.mycustom.action");
-                sendBroadcast(intent);
+//                Intent intent = new Intent("android.mycustom.action");
+//                sendBroadcast(intent);
 
+                callFirstReceiver();
             }
         });
 
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                callThirdReceiver();
             }
         });
+    }
+
+    private void callFirstReceiver(){
+        Intent intent = new Intent("android.mycustom.action");
+
+        //Sending a data to a broadcast with intent
+        intent.putExtra("name", "Abdulazeez Abdullahi");
+        intent.putExtra("age", 12);
+
+        sendBroadcast(intent);
+    }
+
+    private void callThirdReceiver(){
+        Intent intent = new Intent("android.mycustom.anotheraction");
+
+        //Sending data to a broadcast through bundle
+        Bundle bundle = new Bundle();
+        bundle.putString("name", "Abdulazeez Abdullahi");
+        bundle.putInt("age", 12);
+
+        intent.putExtras(bundle);
+
+        sendBroadcast(intent);
     }
 
 
