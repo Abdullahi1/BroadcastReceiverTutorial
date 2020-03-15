@@ -23,17 +23,7 @@
             </intent-filter>
         </receiver>
 
-        <receiver android:name=".MainActivity$MyThirdReceiverInner">
-            <intent-filter android:priority="20">
-                <action android:name="android.mycustom.anotheraction"/>
-            </intent-filter>
-        </receiver>
 
-        <receiver android:name=".MainActivity$MyFourthReceiverInner" >
-            <intent-filter android:priority="30">
-                <action android:name="android.mycustom.action"/>
-            </intent-filter>
-        </receiver>
 
         <receiver android:name=".MySecondReceiver">
             <intent-filter>

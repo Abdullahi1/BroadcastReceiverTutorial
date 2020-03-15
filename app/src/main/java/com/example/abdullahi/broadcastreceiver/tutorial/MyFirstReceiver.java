@@ -13,8 +13,6 @@ public class MyFirstReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         Log.i(TAG, "Hello from 1st receiver");
-        String name = intent.getStringExtra("name");
-        int age = intent.getIntExtra("age",0);
         Toast.makeText(context, "Hello from 1st receiver", Toast.LENGTH_LONG).show();
 
     }
