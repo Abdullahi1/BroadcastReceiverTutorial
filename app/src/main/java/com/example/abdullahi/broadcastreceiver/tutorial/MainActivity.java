@@ -6,6 +6,8 @@ import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.os.BatteryManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -13,6 +15,8 @@ import android.widget.Button;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,46 +48,52 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void callFirstReceiver(){
-        Intent intent = new Intent("android.mycustom.action");
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(Intent.ACTION_BATTERY_CHANGED);
+        Intent intent = registerReceiver(null, intentFilter);
+        
+        int status = intent.getIntExtra(BatteryManager.EXTRA_STATUS, -1);
+        
+        if (status == BatteryManager.BATTERY_STATUS_CHARGING){
+            int level = intent.getIntExtra(BatteryManager.EXTRA_LEVEL, -200);
+            Toast.makeText(this, "Battery Getting Charged\nLevel at "+level +"%", Toast.LENGTH_SHORT).show();
 
-        //Sending a data to a broadcast with intent
-        intent.putExtra("name", "Abdulazeez Abdullahi");
-        intent.putExtra("age", 12);
-
-       // sendBroadcast(intent);
-        sendOrderedBroadcast(intent, null); //To be called when sending an ordered broadcast
-        sendOrderedBroadcast(intent, null, new MyFourthReceiverInner(),null, Activity.RESULT_OK,"Bold",null);
+        }else if (status == BatteryManager.BATTERY_STATUS_DISCHARGING){
+            Toast.makeText(this, "Battery is Discharging", Toast.LENGTH_SHORT).show();
+        }else if (status ==  BatteryManager.BATTERY_STATUS_FULL){
+            Toast.makeText(this, "Battery Fully Charged", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void callThirdReceiver(){
-        Intent intent = new Intent("android.mycustom.anotheraction");
-
-        //Sending data to a broadcast through bundle
-        Bundle bundle = new Bundle();
-        bundle.putString("name", "Abdulazeez Abdullahi");
-        bundle.putInt("age", 12);
-
-        intent.putExtras(bundle);
-
-        sendBroadcast(intent);
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(Intent.ACTION_BATTERY_CHANGED);
+        registerReceiver(batteryStatusReceiver, intentFilter);
     }
 
-
-    public static class MyThirdReceiverInner extends BroadcastReceiver{
-
+    private BroadcastReceiver batteryStatusReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            Log.i("TAG","Hello from 3rd receiver");
-            Toast.makeText(context, "Hello from 3rd receiver", Toast.LENGTH_LONG).show();
-        }
-    }
 
-    public static class MyFourthReceiverInner extends BroadcastReceiver{
+            int status = intent.getIntExtra(BatteryManager.EXTRA_STATUS, -1);
 
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            Log.i("TAG","Hello from 4th receiver");
-            Toast.makeText(context, "Hello from 4th receiver", Toast.LENGTH_LONG).show();
+            if (status == BatteryManager.BATTERY_STATUS_CHARGING){
+                int level = intent.getIntExtra(BatteryManager.EXTRA_LEVEL, -200);
+                Toast.makeText(context, "Battery Getting Charged\nLevel at "+level +"%", Toast.LENGTH_SHORT).show();
+
+            }else if (status == BatteryManager.BATTERY_STATUS_DISCHARGING){
+                Toast.makeText( context, "Battery is Discharging", Toast.LENGTH_SHORT).show();
+            }else if (status ==  BatteryManager.BATTERY_STATUS_FULL){
+                Toast.makeText(context, "Battery Fully Charged", Toast.LENGTH_SHORT).show();
+            }
+
         }
+    };
+
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        unregisterReceiver(batteryStatusReceiver);
     }
 }
