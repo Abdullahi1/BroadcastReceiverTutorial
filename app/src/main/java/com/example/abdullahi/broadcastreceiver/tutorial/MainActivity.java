@@ -2,6 +2,7 @@ package com.example.abdullahi.broadcastreceiver.tutorial;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -49,7 +50,9 @@ public class MainActivity extends AppCompatActivity {
         intent.putExtra("name", "Abdulazeez Abdullahi");
         intent.putExtra("age", 12);
 
-        sendBroadcast(intent);
+       // sendBroadcast(intent);
+        sendOrderedBroadcast(intent, null); //To be called when sending an ordered broadcast
+        sendOrderedBroadcast(intent, null, new MyFourthReceiverInner(),null, Activity.RESULT_OK,"Bold",null);
     }
 
     private void callThirdReceiver(){
